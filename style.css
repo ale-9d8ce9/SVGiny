@@ -1,0 +1,97 @@
+:root{
+    interpolate-size: allow-keywords;
+
+    --c-clr:#9d8ce9;
+    --c-bg-clr:#131214;
+
+    --sz-project-bar-height: 32px;
+    --sz-timeline-height: 128px;
+    --sz-elements-list-width: 120px;
+    --sz-keyframe-width: 300px;
+}
+
+
+
+*{
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+
+    outline: 1px dashed green;
+}
+
+
+
+/* timeline, animation section, project bar, keyframe section and elements list */
+.panel{
+    position: fixed;
+    display: inline-block;
+    background-color: var(--c-bg-clr);
+}
+
+#timeline{
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--sz-timeline-height);
+}
+#project-bar{
+    height: var(--sz-project-bar-height);
+    left: 0;
+    right: 0;
+    top: 0;
+}
+#elements{
+    left: 0;
+    top: var(--sz-project-bar-height);
+    width: var(--sz-elements-list-width);
+    bottom: var(--sz-timeline-height);
+}
+#keyframe{
+    top: var(--sz-project-bar-height);
+    right: 0;
+    width: var(--sz-keyframe-width);
+    bottom: var(--sz-timeline-height);
+}
+#animation{
+    bottom: var(--sz-timeline-height);
+    left: var(--sz-elements-list-width);
+    top: var(--sz-project-bar-height);
+    right: var(--sz-keyframe-width);
+    background-color: #000;
+}
+
+
+
+/* resizers */
+.resizer{
+    position: fixed;
+    padding: 1px;
+    background-color: var(--c-clr);
+    /* border: 0px solid var(--c-clr);
+    transition: 0s all, .1s border;
+}
+.resizer:hover{
+    border-width: 3px; */
+}
+#resizer-elements-list{
+    cursor: ew-resize;
+    left: var(--sz-elements-list-width);
+    top: var(--sz-project-bar-height);
+    bottom: var(--sz-timeline-height);
+}
+#resizer-keyframe{
+    cursor: ew-resize;
+    right: var(--sz-keyframe-width);
+    top: var(--sz-project-bar-height);
+    bottom: var(--sz-timeline-height);
+}
+#resizer-timeline{
+    cursor: ns-resize;
+    left: 0;
+    right: 0;
+    bottom: var(--sz-timeline-height);
+}
+

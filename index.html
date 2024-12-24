@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVGiny</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- <i> project-bar </i> -->
+    <div class="panel" id="project-bar"></div>
+    <!-- <i> timeline </i> -->
+    <div class="panel" id="timeline"></div>
+    <!-- <i> elements list </i> -->
+    <div class="panel" id="elements"></div>
+    <!-- <i> keyframe properties </i> -->
+    <div class="panel" id="keyframe"></div>
+    <!-- <i> animation </i> -->
+    <div class="panel" id="animation"></div>
+
+
+    <!-- <i> resizers </i> -->
+    <div id="resizers" onmousedown="drag.start();body.setAttribute('onmouseup','this.removeAttribute(\'onmousemove\');this.removeAttribute(\'onmouseup\')')">
+        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(0)')" id="resizer-elements-list"></div>
+        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(1)')" id="resizer-keyframe"></div>
+        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(2)')" id="resizer-timeline"></div>
+    </div>
+
+
+    <script src="scripts.js"></script>
+</body>
+</html>
