@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,21 +6,35 @@
     <title>SVGiny</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-mode="svg">
 
-    <!-- <i> project-bar </i> -->
-    <div class="panel" id="project-bar"></div>
-    <!-- <i> timeline </i> -->
+    <!-- project-bar -->
+    <div class="panel" id="project-bar">
+        <div class="opposite">
+            <div>
+                <input type="text" id="project-name" placeholder="Project Name" oninput="project.name=this.value">
+            </div>
+            <div>
+                <input type="range" id="zoom-slider" min="1" max="8000" value="10" oninput="document.getElementById('svg').style.width=this.value+'px'">
+                <!-- switch editor modes -->
+                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','svg')}" name="mode">
+                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','animation')}" name="mode" checked>
+            </div>
+        </div>
+    </div>
+    <!-- timeline -->
     <div class="panel" id="timeline"></div>
-    <!-- <i> elements list </i> -->
+    <!-- elements list -->
     <div class="panel" id="elements"></div>
-    <!-- <i> keyframe properties </i> -->
+    <!-- keyframe properties -->
     <div class="panel" id="keyframe"></div>
-    <!-- <i> animation </i> -->
-    <div class="panel" id="animation"></div>
+    <!-- animation -->
+    <div class="panel" id="animation">
+        <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90"></svg>
+    </div>
 
 
-    <!-- <i> resizers </i> -->
+    <!-- resizers -->
     <div id="resizers" onmousedown="drag.start();body.setAttribute('onmouseup','this.removeAttribute(\'onmousemove\');this.removeAttribute(\'onmouseup\')')">
         <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(0)')" id="resizer-elements-list"></div>
         <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(1)')" id="resizer-keyframe"></div>
@@ -27,6 +42,7 @@
     </div>
 
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

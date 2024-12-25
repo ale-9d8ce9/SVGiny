@@ -16,14 +16,23 @@
     outline: none;
     border: none;
     padding: 0;
+    transition: .1s;
     margin: 0;
     user-select: none;
+    display: inline-block;
+    overflow: hidden;
 
     outline: 1px dashed green;
 }
 
 
 
+
+#svg{
+}
+
+
+/* ANIMATION EDITOR */
 /* timeline, animation section, project bar, keyframe section and elements list */
 .panel{
     position: fixed;
@@ -60,7 +69,30 @@
     left: var(--sz-elements-list-width);
     top: var(--sz-project-bar-height);
     right: var(--sz-keyframe-width);
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
     background-color: #000;
+}
+
+
+
+/* SVG EDITOR */
+/* timeline, animation section, project bar, keyframe section and elements list */
+body[data-mode='svg'] #timeline{
+    translate: 0 100%;
+}
+body[data-mode='svg'] #elements{
+    bottom: 0;
+}
+body[data-mode='svg'] #keyframe{
+    bottom: 0;
+    translate: 100% 0;
+}
+body[data-mode='svg'] #animation{
+    bottom: 0;
+    right: 0;
 }
 
 
@@ -95,3 +127,9 @@
     bottom: var(--sz-timeline-height);
 }
 
+
+/* structure */
+.opposite{
+    display: flex;
+    justify-content: space-between;
+}
