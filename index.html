@@ -17,28 +17,37 @@
             <div>
                 <input type="range" id="zoom-slider" min="1" max="8000" value="10" oninput="document.getElementById('svg').style.width=this.value+'px'">
                 <!-- switch editor modes -->
-                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','svg')}" name="mode">
-                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','animation')}" name="mode" checked>
+                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','svg')}" name="editor-mode">
+                <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','animation')}" name="editor-mode" checked>
             </div>
         </div>
     </div>
     <!-- timeline -->
     <div class="panel" id="timeline"></div>
     <!-- elements list -->
-    <div class="panel" id="elements"></div>
+    <div class="panel" id="elements">
+        <div id="add-element" onclick="addSVG.startRect()">
+            
+        </div>
+    </div>
     <!-- keyframe properties -->
     <div class="panel" id="keyframe"></div>
     <!-- animation -->
     <div class="panel" id="animation">
-        <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90"></svg>
+        <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"></svg>
     </div>
 
+    <div id="overlays">
+        <!-- resizers -->
+        <div id="resizers" onmousedown="drag.start();body.setAttribute('onmouseup','this.removeAttribute(\'onmousemove\');this.removeAttribute(\'onmouseup\')')">
+            <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(0)')" id="resizer-elements-list"></div>
+            <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(1)')" id="resizer-keyframe"></div>
+            <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(2)')" id="resizer-timeline"></div>
+        </div>
+        <!-- add svg -->
+        <div id="add-svg-rect">
 
-    <!-- resizers -->
-    <div id="resizers" onmousedown="drag.start();body.setAttribute('onmouseup','this.removeAttribute(\'onmousemove\');this.removeAttribute(\'onmouseup\')')">
-        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(0)')" id="resizer-elements-list"></div>
-        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(1)')" id="resizer-keyframe"></div>
-        <div class="resizer" onmousedown="body.setAttribute('onmousemove','resize(2)')" id="resizer-timeline"></div>
+        </div>
     </div>
 
 

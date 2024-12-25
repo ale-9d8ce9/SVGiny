@@ -4,10 +4,13 @@
     --c-clr:#9d8ce9;
     --c-bg-clr:#131214;
 
+    /* default panel sizes */
     --sz-project-bar-height: 32px;
     --sz-timeline-height: 128px;
     --sz-elements-list-width: 120px;
     --sz-keyframe-width: 300px;
+
+    --sz-elements-list-width-svg-editor: 100px;
 }
 
 
@@ -16,7 +19,7 @@
     outline: none;
     border: none;
     padding: 0;
-    transition: .1s;
+    transition: .2s;
     margin: 0;
     user-select: none;
     display: inline-block;
@@ -32,7 +35,7 @@
 }
 
 
-/* ANIMATION EDITOR */
+/* ANIMATION EDITOR / DEFAULT */
 /* timeline, animation section, project bar, keyframe section and elements list */
 .panel{
     position: fixed;
@@ -84,6 +87,7 @@ body[data-mode='svg'] #timeline{
     translate: 0 100%;
 }
 body[data-mode='svg'] #elements{
+    width: var(--sz-elements-list-width-svg-editor);
     bottom: 0;
 }
 body[data-mode='svg'] #keyframe{
@@ -93,8 +97,22 @@ body[data-mode='svg'] #keyframe{
 body[data-mode='svg'] #animation{
     bottom: 0;
     right: 0;
+    left: var(--sz-elements-list-width-svg-editor);
 }
 
+
+
+/* add elements */
+#add-element{
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--c-clr);
+}
+#add-svg-rect{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
 
 
 /* resizers */
@@ -125,6 +143,21 @@ body[data-mode='svg'] #animation{
     left: 0;
     right: 0;
     bottom: var(--sz-timeline-height);
+}
+
+body[data-mode='svg'] #resizer-elements-list{
+    padding: 0;
+    bottom: 0;
+    left: var(--sz-elements-list-width-svg-editor);
+}
+body[data-mode='svg'] #resizer-keyframe{
+    right: 0;
+    bottom: 0;
+    translate: 100% 0;
+}
+body[data-mode='svg'] #resizer-timeline{
+    bottom: 0;
+    translate: 0 100%;
 }
 
 
