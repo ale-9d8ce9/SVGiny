@@ -15,7 +15,7 @@
                 <input type="text" id="project-name" placeholder="Project Name" oninput="project.name=this.value">
             </div>
             <div>
-                <input type="range" id="zoom-slider" min="1" max="8000" value="10" oninput="zoom(this.value)">
+                <input type="range" id="zoom-slider" min="1" max="8000" value="10" oninput="zoom(parseInt(this.value))">
                 <!-- switch editor modes -->
                 <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','svg')}" name="editor-mode">
                 <input type="radio" onchange="if (this.checked) {body.setAttribute('data-mode','animation')}" name="editor-mode" checked>
@@ -34,7 +34,7 @@
     <div class="panel" id="keyframe"></div>
     <!-- animation -->
     <div class="panel" id="animation">
-        <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"></svg>
+        <svg id="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"></svg>
     </div>
 
     <div id="overlays">
