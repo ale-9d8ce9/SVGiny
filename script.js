@@ -31,8 +31,9 @@ addSVG.startRect=function () {
         h:0
     }
     i='drag.start();'
-    i+='addSVG.vars.x=window.event.clientX;'
-    i+='addSVG.vars.y=window.event.clientY;'
+    i+='addSVG.vars.x+=window.event.clientX;'
+    i+='addSVG.vars.y+=window.event.clientY;'
+    i+='console.log(addSVG.vars);'
     i+='this.setAttribute("onmousemove", "drag.move()")'
     body.setAttribute('onmousedown', i)
 
@@ -53,6 +54,8 @@ addSVG.createRect=function () {
         addSVG.vars.y+=addSVG.vars.h
         addSVG.vars.h*=-1
     }
+    addSVG.vars.x=addSVG.vars.x*window.innerWidth/svg.getBoundingClientRect().width
+    addSVG.vars.y=addSVG.vars.y*svg.getBoundingClientRect().height/window.innerHeight
     svg.innerHTML+='<rect x="'+addSVG.vars.x+'" y="'+addSVG.vars.y+'" width="'+addSVG.vars.w+'" height="'+addSVG.vars.h+'" fill="none" stroke="#ff00ff" stroke-width="1" />'
 }
 
@@ -100,6 +103,11 @@ function resize(i,j) {
     }
 }
 
+
+
+function zoom(i) {
+    
+}
 
 
 drag.start=function () {
