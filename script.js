@@ -23,33 +23,68 @@ const svg = document.getElementById('svg')
 
 
 
-addSVG.startRect=function () {
+addSVG.start=function (i) {
     addSVG.vars={
         x:svg.getBoundingClientRect().x*-1,
-        y:svg.getBoundingClientRect().y*-1,
-        w:svg.getBoundingClientRect().x*-1,
-        h:svg.getBoundingClientRect().y*-1
+        y:svg.getBoundingClientRect().y*-1
     }
-    i='drag.start();'
-    i+='addSVG.vars.x+=window.event.clientX;'
-    i+='addSVG.vars.y+=window.event.clientY;'
-    i+='this.setAttribute("onmousemove", "drag.move()")'
-    body.setAttribute('onmousedown', i)
+    a='drag.start();'
+    a+='addSVG.vars.x+=window.event.clientX;'
+    a+='addSVG.vars.y+=window.event.clientY;'
+    b=''
+    c='this.removeAttribute("onmousedown");'
+    switch (i) {
+        case 0: //rect
+            addSVG.vars.w=svg.getBoundingClientRect().x*-1
+            addSVG.vars.h=svg.getBoundingClientRect().y*-1
 
-    i='this.removeAttribute("onmousedown");'
-    i+='addSVG.vars.w+=window.event.clientX-addSVG.vars.x;'
-    i+='addSVG.vars.h+=window.event.clientY-addSVG.vars.y;'
-    i+='addSVG.createRect();'
-    i+='this.removeAttribute("onmousemove");'
-    i+='this.removeAttribute("onmouseup");'
-    body.setAttribute('onmouseup', i)
+            b+='drag.move(3);'
+            
+            c+='addSVG.vars.w+=window.event.clientX-addSVG.vars.x;'
+            c+='addSVG.vars.h+=window.event.clientY-addSVG.vars.y;'
+            c+='addSVG.createRect();'
+            c+='this.removeAttribute("onmousemove");'
+            c+='this.removeAttribute("onmouseup");'
+            break;
+            case 1: //circle
+            addSVG.vars.rx=svg.getBoundingClientRect().x*-1
+            addSVG.vars.ry=svg.getBoundingClientRect().y*-1
+            
+            b+='drag.move(4);'
+
+            c+='addSVG.vars.rx+=window.event.clientX;'
+            c+='addSVG.vars.ry+=window.event.clientY;'
+            c+='addSVG.createCircle();'
+            c+='this.removeAttribute("onmousemove");'
+            c+='this.removeAttribute("onmouseup");'
+            break;
+        default:
+            break;
+    }
+    a+='this.setAttribute("onmousemove", "'+b+'");'
+    body.setAttribute('onmousedown', a)
+    body.setAttribute('onmouseup', c)
 }
+
+addSVG.overlay=function (i) {
+    switch (i) {
+        case 0: //rect
+            
+            break;
+        case 1: //circle
+            break;
+        default:
+            break;
+    }
+}
+
 addSVG.createRect=function () {
-    console.log(addSVG.vars)
-    addSVG.vars.x/=svg.getBoundingClientRect().width
-    addSVG.vars.y/=svg.getBoundingClientRect().height
-    addSVG.vars.w/=svg.getBoundingClientRect().width
-    addSVG.vars.h/=svg.getBoundingClientRect().height
+    // convert screen pixels to svg pixels
+    addSVG.vars.x=convertPixelToSVG(addSVG.vars.x, false)
+    addSVG.vars.y=convertPixelToSVG(addSVG.vars.y, true)
+    addSVG.vars.w=convertPixelToSVG(addSVG.vars.w, false)
+    addSVG.vars.h=convertPixelToSVG(addSVG.vars.h, true)
+    // convert negative height / width values to positive
     if (addSVG.vars.w<0) {
         addSVG.vars.x+=addSVG.vars.w
         addSVG.vars.w*=-1
@@ -60,16 +95,27 @@ addSVG.createRect=function () {
         addSVG.vars.y+=addSVG.vars.h
         addSVG.vars.h*=-1
     }
-    console.log(addSVG.vars)
+    // create rect element
     svg.innerHTML+='<rect x="'+addSVG.vars.x+'" y="'+addSVG.vars.y+'" width="'+addSVG.vars.w+'" height="'+addSVG.vars.h+'" fill="#00ffffa0" />'
+}
+
+addSVG.createCircle=function () {
+    // convert screen pixels to svg units
+    addSVG.vars.x=convertPixelToSVG(addSVG.vars.x, false)
+    addSVG.vars.y=convertPixelToSVG(addSVG.vars.y, true)
+    addSVG.vars.rx=convertPixelToSVG(addSVG.vars.rx, false)
+    addSVG.vars.ry=convertPixelToSVG(addSVG.vars.ry, true)
+    //calculate radius
+    addSVG.vars.r=Math.sqrt((addSVG.vars.rx-addSVG.vars.x)**2+(addSVG.vars.ry-addSVG.vars.y)**2)
+    // create circle element
+    svg.innerHTML+='<circle cx="'+addSVG.vars.x+'" cy="'+addSVG.vars.y+'" r="'+addSVG.vars.r+'" fill="#00ffffa0" />'
 }
 
 
 
 
 // resize panels / 
-function resize(i,j) {
-    drag.move()
+function resize(i) {
     switch (i) {
         case 0:
             j=parseInt(getCssProperty('sz-elements-list-width'))-drag.mouseChangeX
@@ -101,12 +147,26 @@ function resize(i,j) {
             }
             setCssProperty('sz-timeline-height', j+'px')
             break;
-        case 3:
-            break;
         default:
             break;
     }
 }
+
+
+
+function convertPixelToSVG(i,j) {
+    //get svg viewBox width and height
+    a=svg.getAttribute('viewBox').split(' ')
+    a=[a[2],a[3]]
+    if (j) {
+        //if vertical
+        return i/svg.getBoundingClientRect().width*parseInt(a[0])
+    } else {
+        //if horizontal
+        return i/svg.getBoundingClientRect().height*parseInt(a[1])
+    }
+}
+
 
 
 
@@ -119,11 +179,35 @@ drag.start=function () {
     drag.mouseOldX=window.event.clientX
     drag.mouseOldY=window.event.clientY
 }
-drag.move=function () {
+drag.move=function (i,j) {
     drag.mouseChangeX=drag.mouseOldX-window.event.clientX
     drag.mouseChangeY=drag.mouseOldY-window.event.clientY
     drag.mouseOldX=window.event.clientX
     drag.mouseOldY=window.event.clientY
+
+    switch (i) {
+        // resize panels
+        case 0:
+            resize(0)
+            break;
+        case 1:
+            resize(1)
+            break;
+        case 2:
+            resize(2)
+            break;
+        // creating elements
+        case 3:
+            //rect
+            addSVG.overlay(0)
+            break;
+        case 4:
+            //circle
+            addSVG.overlay(1)
+            break;
+        default:
+            break;
+    }
 }
 
 
